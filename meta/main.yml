@@ -1,0 +1,39 @@
+galaxy_info:
+  author: Rehan Mahmood
+  description: The `ansible-bht` installs & manages `bht`, a tool for testing Hard Disks.
+
+  license: Apache-2.0
+
+  min_ansible_version: 2.1
+
+  platforms:
+    - name: EL
+      versions:
+        - '8'
+    - name: Fedora
+      versions:
+        - '35'
+        - '36'
+    - name: opensuse
+      versions:
+        - '15.4'
+    - name: Ubuntu
+      versions:
+        - bionic
+        - focal
+        - jammy
+    - name: Debian
+      versions:
+        - buster
+        - bullseye
+        - bookworm
+    - name: FreeBSD
+      versions:
+        - '13.0'
+        - '14.0'
+  galaxy_tags:
+    - bht
+    - badblocks
+    - 'Disk Burnin'
+    - 'Hard Drive Testing'
+dependencies: []

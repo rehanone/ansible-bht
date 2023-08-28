@@ -1,0 +1,8 @@
+# code: language=ansible
+---
+bht_core_dependencies:
+  - 'e2fsprogs'
+  - 'coreutils'
+  - 'git'
+
+bht_additional_dependencies: []
