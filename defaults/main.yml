@@ -1,0 +1,7 @@
+# code: language=ansible
+---
+# Default value for debug
+bht_debug: false
+
+# Default state
+bht_state: present

@@ -1,0 +1,30 @@
+# code: language=ansible
+---
+- name: Clone bht
+  ansible.builtin.git:
+    repo: '{{ bht_config.repo_source }}'
+    dest: '{{ bht_config.repo_directory }}'
+    depth: 1
+    version: '{{ bht_config.repo_revision }}'
+
+- name: Create install directory
+  ansible.builtin.file:
+    path: '{{ bht_config.install_directory }}'
+    state: directory
+
+- name: Create bht executable from template
+  ansible.builtin.template:
+    src: bht.j2
+    dest: '{{ bht_config.install_directory }}/bht'
+    owner: root
+    group: root
+    mode: '0755'
+  vars:
+    home_directory: '{{ bht_config.home_directory }}'
+    repo_directory: '{{ bht_config.repo_directory }}'
+
+- name: 'Link bht script from {{ bht_config.install_directory }}/bht to {{ bht_config.binary_directory }}/bht'
+  ansible.builtin.file:
+    src: '{{ bht_config.install_directory }}/bht'
+    dest: '{{ bht_config.binary_directory }}/bht'
+    state: link

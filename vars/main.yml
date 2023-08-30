@@ -1,0 +1,33 @@
+# code: language=ansible
+---
+# Default dictionary
+bht_defaults:
+  debug: '{{ bht_debug }}'
+  state: '{{ bht_state }}'
+  core_dependencies: '{{ bht_core_dependencies }}'
+  additional_dependencies: '{{ bht_additional_dependencies }}'
+  install_directory: '{{ bht_install_directory }}'
+  home_directory: '{{ bht_home_directory }}'
+  binary_directory: '{{ bht_binary_directory }}'
+  repo_directory: '{{ bht_repo_directory }}'
+  repo_source: '{{ bht_repo_source }}'
+  repo_revision: '{{ bht_repo_revision }}'
+  
+
+# The source repository url for bht
+bht_repo_source: 'https://github.com/ezonakiusagi/bht.git'
+
+# The source repository revision for bht
+bht_repo_revision: master
+
+# The directory where source repository is cloned
+bht_repo_directory: '/opt/bht-repository'
+
+# The directory where `bht` executable is installed
+bht_install_directory: '/opt/bht'
+
+# The directory where `bht` tool will write its reports
+bht_home_directory: '/var/lib/bht'
+
+# The systems' binary directory where `bht` executable will be linked to make is avalible on PATH
+bht_binary_directory: '/usr/local/bin'

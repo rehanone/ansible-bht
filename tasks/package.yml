@@ -1,0 +1,6 @@
+# code: language=ansible
+---
+- name: 'Ensure package: {{ package }} is in state {{ state }}'
+  ansible.builtin.package:
+    name: '{{ package }}'
+    state: '{{ state }}'

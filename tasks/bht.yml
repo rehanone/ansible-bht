@@ -1,0 +1,56 @@
+# code: language=ansible
+---
+- name: Setting OS variables
+  ansible.builtin.include_vars: "{{ lookup('ansible.builtin.first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_facts.os_family }}.yml"
+        - default.yml
+      paths:
+        - vars/os_family
+
+- name: Set bht_config
+  set_fact:
+    bht_config: >-
+      {{ bht_defaults | ansible.builtin.combine(
+        (bht | default(bht_defaults))
+      ) }}
+
+- name: Print bht_config dictionary if debug flag is set
+  ansible.builtin.debug:
+    var: bht_config
+  when: bht_config.debug
+
+- name: Install core dependencies
+  ansible.builtin.include_tasks: package.yml
+  vars:
+    package: '{{ pkg }}'
+    state: present
+  when: (bht_config.state | string) == 'present'
+  loop: '{{ bht_config.core_dependencies | list }}'
+  loop_control:
+    loop_var: pkg
+
+- name: Install additional dependencies
+  ansible.builtin.include_tasks: package.yml
+  vars:
+    package: '{{ pkg }}'
+    state: '{{ bht_config.state | string }}'
+  loop: '{{ bht_config.additional_dependencies | list }}'
+  loop_control:
+    loop_var: pkg
+
+- name: 'Ensure home directory exists'
+  ansible.builtin.file:
+    path: '{{ bht_config.home_directory | string }}'
+    state: directory
+  when: (bht_config.state | string) == 'present'
+
+- name: Install bht
+  ansible.builtin.include_tasks: install.yml
+  when: (bht_config.state | string) == 'present'
+
+- name: Uninstall bht
+  ansible.builtin.include_tasks: uninstall.yml
+  when: (bht_config.state | string) == 'absent'
