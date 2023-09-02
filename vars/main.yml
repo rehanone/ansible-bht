@@ -12,7 +12,7 @@ bht_defaults:
   repo_directory: '{{ bht_repo_directory }}'
   repo_source: '{{ bht_repo_source }}'
   repo_revision: '{{ bht_repo_revision }}'
-  
+
 
 # The source repository url for bht
 bht_repo_source: 'https://github.com/ezonakiusagi/bht.git'

@@ -11,7 +11,7 @@
         - vars/os_family
 
 - name: Set bht_config
-  set_fact:
+  ansible.builtin.set_fact:
     bht_config: >-
       {{ bht_defaults | ansible.builtin.combine(
         (bht | default(bht_defaults))
@@ -23,28 +23,27 @@
   when: bht_config.debug
 
 - name: Install core dependencies
-  ansible.builtin.include_tasks: package.yml
-  vars:
-    package: '{{ pkg }}'
+  ansible.builtin.package:
+    name: '{{ package }}'
     state: present
   when: (bht_config.state | string) == 'present'
   loop: '{{ bht_config.core_dependencies | list }}'
   loop_control:
-    loop_var: pkg
+    loop_var: package
 
 - name: Install additional dependencies
-  ansible.builtin.include_tasks: package.yml
-  vars:
-    package: '{{ pkg }}'
+  ansible.builtin.package:
+    name: '{{ package }}'
     state: '{{ bht_config.state | string }}'
   loop: '{{ bht_config.additional_dependencies | list }}'
   loop_control:
-    loop_var: pkg
+    loop_var: package
 
 - name: 'Ensure home directory exists'
   ansible.builtin.file:
     path: '{{ bht_config.home_directory | string }}'
     state: directory
+    mode: '0755'
   when: (bht_config.state | string) == 'present'
 
 - name: Install bht

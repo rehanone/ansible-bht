@@ -1,16 +1,16 @@
 # code: language=ansible
 ---
-- name: 'Remove bht script link from {{ bht_config.binary_directory }}/bht'
+- name: Remove bht script link from binary_directory
   ansible.builtin.file:
     path: '{{ bht_config.binary_directory }}/bht'
     state: absent
 
-- name: 'Remove bht install directory {{ bht_config.install_directory }}'
+- name: Remove bht install directory
   ansible.builtin.file:
     path: '{{ bht_config.install_directory }}'
     state: absent
 
-- name: 'Remove bht repo directory {{ bht_config.repo_directory }}'
+- name: Remove bht repo directory
   ansible.builtin.file:
     path: '{{ bht_config.repo_directory }}'
     state: absent
